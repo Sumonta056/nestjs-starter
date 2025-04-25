@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateStoryDto } from './dto/create-story.dto';
-import { FilterStoryDto } from './dto/filter-story.dto';
+import { CreateStoryDto } from '../dto/create-story.dto';
+import { FilterStoryDto } from '../dto/filter-story.dto';
 
 export interface Story {
   id: number;

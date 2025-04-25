@@ -8,10 +8,10 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { CreateStoryDto } from './dto/create-story.dto';
-import { FilterStoryDto } from './dto/filter-story.dto';
-import { UpdateStoryDto } from './dto/update-story.dto';
-import { Story, StoryService } from './story.service';
+import { CreateStoryDto } from '../dto/create-story.dto';
+import { FilterStoryDto } from '../dto/filter-story.dto';
+import { UpdateStoryDto } from '../dto/update-story.dto';
+import { Story, StoryService } from '../service/story.service';
 
 @Controller('story')
 export class StoryController {
