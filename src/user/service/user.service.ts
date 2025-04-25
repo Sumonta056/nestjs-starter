@@ -1,27 +1,47 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 export interface IUser {
-  id: string;
+  id: number;
   name: string;
+  email: string;
+  age: number | null;
+  country: string | null;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 @Injectable()
 export class UserService {
-  private users: IUser[] = [
-    { id: '1', name: 'John Doe' },
-    { id: '2', name: 'Jane Smith' },
-  ];
+  users: IUser[];
+  constructor(private readonly prisma: PrismaService) {}
 
-  findUsersByName(name: string): IUser[] {
+  createUser(userData: Prisma.UserCreateInput): Promise<IUser> {
+    return this.prisma.user.create({
+      data: userData,
+    }) as Promise<IUser>;
+  }
+
+  getAllUsers() {
+    return this.prisma.user.findMany();
+  }
+
+  findUsersByName(name: string): Promise<IUser[]> {
     if (!name) {
-      return this.users;
+      return this.getAllUsers();
     }
-    return this.users.filter((user) =>
-      user.name.toLowerCase().includes(name.toLowerCase()),
-    );
+    return this.prisma.user.findMany({
+      where: {
+        name: {
+          contains: name,
+          mode: 'insensitive',
+        },
+      },
+    }) as Promise<IUser[]>;
   }
 
   findUserById(id: string): IUser | undefined {
-    return this.users.find((user) => user.id === id);
+    return this.users.find((user) => user.id === parseInt(id));
   }
 }

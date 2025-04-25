@@ -8,11 +8,16 @@ export class UserController {
 
   @Post()
   addUser(@Body() user: UserDTO) {
-    return { message: 'User added successfully', user };
+    return this.userService.createUser(user);
   }
 
   @Get()
-  getUsers(@Query('name') name: string): IUser[] {
+  getAllUsers() {
+    return this.userService.getAllUsers();
+  }
+
+  @Get()
+  getUsers(@Query('name') name: string): Promise<IUser[]> {
     return this.userService.findUsersByName(name);
   }
 

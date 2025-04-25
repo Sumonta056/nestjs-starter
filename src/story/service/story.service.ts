@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateStoryDto } from '../dto/create-story.dto';
 import { FilterStoryDto } from '../dto/filter-story.dto';
 
@@ -12,6 +13,7 @@ export interface Story {
 export class StoryService {
   private stories: Story[] = [];
   private idCounter = 1;
+  constructor(private readonly prisma: PrismaService) {}
 
   create(createStoryDto: CreateStoryDto): Story {
     const newStory = { id: this.idCounter++, ...createStoryDto };
